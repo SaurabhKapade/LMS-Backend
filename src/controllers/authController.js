@@ -16,6 +16,7 @@ async function loginUser(req,res){
             error:{}
         })
     }catch(error){
+        console.log("e is ",error)
         return res.status(error.statusCode).json({
             success:false,
             message:error.message,

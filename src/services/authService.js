@@ -4,8 +4,8 @@ const { findTeacher } = require("../repository/teacherRepository");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 async function login(userDetails){
-    const email = userDetails.email
-    const plainPassword = userDetails.password;
+    const email = userDetails.email.trim()
+    const plainPassword = userDetails.password.trim();
 
     let user = await findStudent({email});
     if(!user){
@@ -17,7 +17,7 @@ async function login(userDetails){
             statusCode:404
         }
     }
-    const passwordCheck = bcrypt.compare(plainPassword,user.password)
+    const passwordCheck = await bcrypt.compare(plainPassword,user.password)
     if(!passwordCheck){
         throw{
             message:'Invalid password please try again later',

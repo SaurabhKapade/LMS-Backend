@@ -18,7 +18,7 @@ const courseSchema = new mongoose.Schema({
         required:[true,'Instructor Name must be provided']   
     },
     thumbnail:{
-        type:String
+        type:String,
     },
     public_id:{
         type:String
@@ -56,10 +56,10 @@ const courseSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-    students_enrolled:{
-        type:Number,
-        default:0,
-    },
+    students_enrolled:[{
+        type:mongoose.Types.ObjectId,
+        ref:'Student',
+    }],
     level:{
         type:String,
         enum:['Beginner','Intermediate','Advanced'],

@@ -44,6 +44,7 @@ async function getAllStudents(){
 async function getStudentById(studentId){
     try{
         const student = await Student.findById(studentId)
+        await student.populate('enrolled_courses.course')
         return student
     }catch(error){
         console.log(error)

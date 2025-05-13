@@ -2,7 +2,6 @@ const appError = require("./appError");
 
 class badRequestError extends appError{
     constructor(invalidParams){
-        // console.log('invalidparamsss',invalidParams)
         let message=''
         invalidParams.forEach((param) => {
             message+=`${param}\n`

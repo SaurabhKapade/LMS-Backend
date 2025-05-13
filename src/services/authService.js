@@ -18,6 +18,7 @@ async function login(userDetails){
         }
     }
     const passwordCheck = await bcrypt.compare(plainPassword,user.password)
+    console.log("plain password ",passwordCheck)
     if(!passwordCheck){
         throw{
             message:'Invalid password please try again later',
@@ -30,7 +31,8 @@ async function login(userDetails){
         userData:{
             email:user.email,
             id:user._id,
-            firstName:user.firstName
+            firstName:user.firstName,
+            role:user.role
         }
     }
 

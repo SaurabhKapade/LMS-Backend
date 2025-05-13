@@ -1,11 +1,11 @@
-const { createNewCourse, getCourses, getCourseById, getCourseByTeacherName, addModuleInCourse, removeSession, commentOnSession } = require("../services/courseService")
+const { createNewCourse, getCourses, getCourseById, getCourseByTeacherName, addModuleInCourse, removeSession, commentOnSession, enrollStudentInCourse } = require("../services/courseService")
 const appError = require("../utils/appError")
 
 async function addNewCourse(req,res){
     try{
         const Course = await createNewCourse({
             ...req.body,
-            // imagePath:req.file.path
+            imagePath:req.file.path
             },
             req.user
         )
@@ -158,6 +158,29 @@ async function addNewComment(req,res){
     }
 }
 
+async function enrollStudent(req,res){
+    // courseId,studentId
+    console.log("data is ",req.body)
+    try{
+        const response = await enrollStudentInCourse(req.body.courseId,req.body.email)
+         return res.status(200).json({
+            success:true,
+            message:'enrollMent success',
+            data:response,
+            error:{}
+        })
+    }catch(error){
+        console.log('err is ',error)
+        res.status(error.statusCode).json({
+            success:false,
+            message:error.message,
+            data:{},
+            error:error
+        })
+    }
+
+}
+
 module.exports = {
     addNewCourse,
     fetchAllCourses,
@@ -165,5 +188,6 @@ module.exports = {
     fetchCourseByTeacher,
     insertModule,
     removeCourseSession,
-    addNewComment
+    addNewComment,
+    enrollStudent
 }

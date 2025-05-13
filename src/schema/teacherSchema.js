@@ -39,7 +39,7 @@ const teacherSchema = new mongoose.Schema({
         type:String,
         required:[true,'password should be provided'],
         minlength:[6,'password should be minimum 6 character long'],
-        select:false
+        // select:false
     },
     role:{
         type:String,
@@ -63,7 +63,8 @@ const teacherSchema = new mongoose.Schema({
     
 },{timestamps:true});
 
-teacherSchema.pre('save',async function(){
+teacherSchema.pre('save',async function(next){
+    if(!this.isModified('password')) return next()
     this.password = await bcrypt.hash(this.password,10)
 })
 
